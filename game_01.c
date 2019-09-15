@@ -48,7 +48,7 @@ int main()
  //inicio da Quest do aventureiro
  printf("\n*Você acorda dentro de uma estalagem* \n"); //adicionar detalhes a essa parte
  printf("Levanto,você olha o local em que está e não reconhece o local, se questionando o que está acontecendo e tenta lembrar o que faz naquele local,\nporém não consegue lembrar de nada e percebe que não consegue nem mesmo lembrar de seu nome ou passado\n");
- printf("\nNo meio da sua tentativa de compreender o que poderia estar acontecendo, uma pessoa bate na porta do quarto que você está.\n");
+ printf("No meio da sua tentativa de compreender o que poderia estar acontecendo, uma pessoa bate na porta do quarto que você está.\n");
  printf("Você vai até a porta do quarto, abrindo, vê-se uma moça , ela entra no seu quarto e fala:\n");
  printf("Você deve pagar pelo estadia\n");
  printf("Questionar: s(sim) ou n(não)\n");
