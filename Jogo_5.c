@@ -13,7 +13,7 @@ int func_atk_mob(){
   printf("Seu inimigo ataca\n");
   srand(time(NULL));
   dice=rand()%20+1;
-  if (dice>=14){
+  if (dice>=14){              //Esse 14 tem que ser variavel, pois ele vai depender da classe e itens, então é bom ter um calculo pras "resistencias"
     sleep(2);
     printf("Sua Vida:%0.f\n",hp);
   }else{
@@ -26,7 +26,7 @@ int func_atk_player (){
   srand(time(NULL));
   dice=rand()%20+1;
   printf("Seu dado foi: %d\n",dice);
-  if (dice>=12){
+  if (dice>=12){              //Aqui tbm seria fixo, cada monstro com o suas resistencias, ai calcula com a situações...
     sleep(2);
     printf("*Você acerta o inimigo*\n");
     Ehp=Ehp-dm-mp;
@@ -39,7 +39,7 @@ int func_atk_player (){
 
 int func_combate(){
   //Inicio do Ataque do Player
-  printf("digita 'a' para jogar um dado de ataque\n");
+  printf("digita 'a' para jogar um dado de ataque\n");                //Aqui podemos tentar integrar com alguma coisa, se for possivel o firebase, pode ser até em app...
   scanf(" %c", &sn);
   while(sn!='a') {
     printf("digita 'a' para jogar um dado de ataque\n");
@@ -71,7 +71,7 @@ int batalha_a_d()
   do{
     Ehp=30;
     Edm=8;
-   func_combate();
+   func_combate();    // Quando chamarmos a função combate podemos passar os participantes do combate, outra coisa que não podemos esquecer é a iniciativa, tem que ser rolada no combate.
   } while (hp>0&&Ehp> 0);
 }//Função da Batalha 'Caça dos Goblins' Dificil
 
