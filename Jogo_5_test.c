@@ -4,11 +4,6 @@
 #include <unistd.h>
 #include "jogador_test.h"
 
-char c,sn; //esse conjunto está associado as variáveis inseridas no jogo
-int dice; //Variáveis do mundo
-float Edm,Ehp; //Variáveis do mundo
-float hp,dm,mp; //Variáveis do jogador
-int gold; //Variáveis do jogador
 
 int func_atk_mob(){
   printf("Seu inimigo ataca\n");
