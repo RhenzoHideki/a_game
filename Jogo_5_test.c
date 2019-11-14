@@ -36,10 +36,10 @@ int func_atk_player (){
 int func_combate(){
   //Inicio do Ataque do Player
   printf("digita 'a' para jogar um dado de ataque\n");
-  scanf(" %c", &sn);
-  while(sn!='a') {
+  scanf(" %c", &choices);
+  while(choices!='a') {
     printf("digita 'a' para jogar um dado de ataque\n");
-    scanf(" %c", &sn);
+    scanf(" %c", &choices);
   }
   func_atk_player();
   //Final do Ataque do Player
@@ -84,9 +84,9 @@ int batalha_a_f()
   Edm=8;
 
   do{
-    while(sn!='a'){
+    while(choices!='a'){
       printf("digita 'a' para jogar um dado de ataque\n");
-      scanf(" %c",&sn);
+      scanf(" %c",&choices);
       dice=rand()%20+1;
       printf("Seu dado foi: %d\n",dice);
       if (dice>=12){
@@ -119,8 +119,8 @@ int quest_1_lado_a ()
   sleep(3);
   do{
     printf("*digite 's' para jogar o dado*\n");
-    scanf(" %c",&sn);
-  }while (sn!='s');
+    scanf(" %c",&choices);
+  }while (choices!='s');
   srand(time); //implementação do rolamento de dado
   dice=rand()%20+1;
   printf("seu dado rodou:%d\n",dice);
@@ -137,12 +137,12 @@ int escolha_Quest_1(){
 
   do{ //escolha da missão que será feito
     printf("(p)Primeira missão\n(s)Segunda missão\n");
-    scanf(" %c",&sn);
+    scanf(" %c",&choices);
 
-    if (sn=='p'){ //primeira missão
+    if (choices=='p'){ //primeira missão
       quest_1_lado_a();
 
-    }else if (sn=='s'){ //segunda missão
+    }else if (choices=='s'){ //segunda missão
       quest_1_lado_b();
     }else{
       printf("Invalido\n");
@@ -157,15 +157,15 @@ int escolha_Quest_1(){
 int dialogo_1()
 {
   while (1){ //Pequeno desenvolvimento da razão por estar naquele local
-    scanf(" %c",&sn);
-    if (sn=='s'){//caso haja interrese do jogardor
+    scanf(" %c",&choices);
+    if (choices=='s'){//caso haja interrese do jogardor
       printf("*Você pergunta onde está e o que aconteceu*");
       sleep(3);
       printf("\n-Bem...Você tem que pagar a estadia ,mas se está se perguntando onde se encontra, estamos em um vilareijo a dois dias da capital do reino.\nJá você assim que entrou aqui acabou desmaiando\n");
       sleep(2);
       printf("Parece que você não lembra de muita coisa, vamos proseguir então ...\n");
       break;
-    }else if(sn=='n'){//caso ele queira simplesmente prosseguir
+    }else if(choices=='n'){//caso ele queira simplesmente prosseguir
       printf("-Bem parece que você não quer falar nada, vamos proseguir então...\n");
       break;
     }else{
