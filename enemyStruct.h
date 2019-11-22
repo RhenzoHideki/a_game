@@ -7,12 +7,13 @@
 
 #endif //A_GAME_ENEMYSTRUCT_H
 
-struct Enemy enemy
-        {
-                char name[20];
-                int life;
-                int mana;
-                int resistence;
-                int damage;
-                int dice;
-        };
+
+struct Enemy
+{
+        char name[20];
+        int life;
+        int mana;
+        int resistence;
+        int damage;
+        int dice;
+};
