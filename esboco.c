@@ -56,5 +56,4 @@ int hit(){
 
 void main()
 {
-  printf("%d\n", goblin.damage[2]);
 }
