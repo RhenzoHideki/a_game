@@ -37,9 +37,16 @@ void clrscr()
   system("@cls||clear");
 }
 
+void randomize()
+{
+  srand(time(NULL));
+}
+
 int dice(int aux)
 {
-  return rand() % aux + 1;
+  int rolagem;
+  rolagem = (rand() % aux) + 1;
+  return rolagem;
 }
 
 int damageDone(int aux[3])
@@ -172,40 +179,40 @@ void fight(struct Tcreature aux1, struct Tcreature aux2)
   int acerto, damage;
   while (aux1.life > 1 || aux2.life > 1)
   {
-    printf("%s se prepara pra atacar...e..", aux1.name);
+    printf("%s se prepara pra atacar...e..\n", aux1.name);
     acerto = dice(20);
     if (acerto = 20)
     {
-      printf("Você rolou 20!! Acertos criticos dão o dobro de dano.");
+      printf("Você rolou 20!! Acertos criticos dão o dobro de dano.\n");
       damage = (2 * damageDone(aux1.damage));
     }
     else if (acerto < aux2.resistence)
     {
-      printf("Errou o golpe, você rolou %d e a resistencia do inimigo é %d", acerto, aux2.resistence);
+      printf("Errou o golpe, você rolou %d e a resistencia do inimigo é %d\n", acerto, aux2.resistence);
     }
     else
     {
-      printf("Você rolou %d e acertou o inimigo que tem resistencia %d", acerto, aux2.resistence);
+      printf("Você rolou %d e acertou o inimigo que tem resistencia %d\n", acerto, aux2.resistence);
       damage = damageDone(aux1.damage);
     }
     aux2.life = aux2.life - damage;
     if (aux2.life < 1)
       break;
 
-    printf("%s se prepara pra atacar...e..", aux2.name);
+    printf("%s se prepara pra atacar...e..\n", aux2.name);
     acerto = dice(20);
     if (acerto = 20)
     {
-      printf("Você rolou 20!! Acertos criticos dão o dobro de dano.");
+      printf("Você rolou 20!! Acertos criticos dão o dobro de dano.\n");
       damage = (2 * damageDone(aux2.damage));
     }
     else if (acerto < aux1.resistence)
     {
-      printf("Errou o golpe, você rolou %d e a resistencia do inimigo é %d", acerto, aux1.resistence);
+      printf("Errou o golpe, você rolou %d e a resistencia do inimigo é %d\n", acerto, aux1.resistence);
     }
     else
     {
-      printf("Você rolou %d e acertou o inimigo que tem resistencia %d", acerto, aux1.resistence);
+      printf("Você rolou %d e acertou o inimigo que tem resistencia %d\n", acerto, aux1.resistence);
       damage = damageDone(aux2.damage);
     }
     aux1.life = aux1.life - damage;
@@ -216,7 +223,7 @@ void easterEgg()
 {
   int escolha;
   char *str1 = "Você deseja fazer alguma coisa a respeito??\n1 - Fugir da galinha??\n2 - Pedir ajuda??\n3 - Chorar pela sua mamãe??\n->";
-  char *str2 = "Sua escolha pouco importa, a galinha quer sanguee!!";
+  char *str2 = "Sua escolha pouco importa, a galinha quer sanguee!!\n";
   colledPrint(str1);
   scanf("%d", &escolha);
   colledPrint(str2);
@@ -227,11 +234,11 @@ void main()
 {
 
   //loginUser(); //começa com o login do usuario, deixar pra dps
-
+  randomize();
   charSelection();
   //Textao
   clrscr();
-  colledPrint("Here i gooooooooooooooooooooooooooooo");
+ 
   char *str1 = "Obstinado a conhecer a grande cidade de Whiterun e conhecer o mestre de sua arte"
                " você decide sair da fazenda que passou sua vida toda deixando para trás sua familia e amigos..."
                " Após 2 dias de viagem a sua primeira parada é na vila de Riverwood."
