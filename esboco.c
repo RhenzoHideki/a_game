@@ -5,20 +5,25 @@
 #include <time.h>
 
 char NAME[20];
-struct PC
+struct Tcreature
 {
   char name[20];
   int life; //pos[0]= Dice,1= times, 2=bonus
   int resistence;
   int damage[3]; //Dice, times, bonus
-} goblin, player;
+} player;
 
-// goblin = {
-//     "Goblin",
-//     {6, 2, 0},
-//     0,
-//     15,
-//     {6, 1, 2}};
+struct Tcreature goblin = {
+    "Goblin",
+    20,
+    15,
+    {6, 1, 2}};
+
+struct Tcreature galinha = {
+    "Galinha",
+    30,
+    16,
+    {10, 1, 5}};
 
 void delay(unsigned int mseconds)
 {
@@ -37,29 +42,15 @@ int dice(int aux)
   return rand() % aux + 1;
 }
 
-// int lifeEnemy(struct PC aux)
-// {
-//   int life = 0;
-//   for (int i = 0; i < aux.life[1]; i++)
-//   {
-//     life = life + dice(aux.life[0]);
-//   }
-//   return life;
-// };
-
-// int damageHero()
-// {
-//   int damage = 0;
-//   for (int i = 0; i < player.damage[1]; i++)
-//   {
-//     damage = player.damage[0] + damage;
-//   }
-//   return damage + player.damage[2];
-// }
-
-// int hit()
-// {
-// }
+int damageDone(int aux[3])
+{
+  int damage = 0;
+  for (int i = 0; i < aux[1]; i++)
+  {
+    damage = dice(aux[0]) + damage;
+  }
+  return damage + aux[2];
+};
 
 void defineClassPlayer(int aux)
 {
@@ -90,16 +81,21 @@ void defineClassPlayer(int aux)
   }
 }
 
-void printColled (char *aux){
+void colledPrint(char *aux)
+{
   int count = 0;
   while (*aux != 0)
   {
-    if (count > 80 && *aux == ' ')
+    if (*aux == '\n')
+    {
+      count = 0;
+    }
+    if (count > 100 && *aux == ' ')
     {
       printf("\n");
       count = 0;
       *aux++;
-    }    
+    }
     printf("%c", *aux++);
     fflush(stdout);
     delay(50000);
@@ -171,6 +167,61 @@ void charSelection()
     }
   }
 }
+void fight(struct Tcreature aux1, struct Tcreature aux2)
+{
+  int acerto, damage;
+  while (aux1.life > 1 || aux2.life > 1)
+  {
+    printf("%s se prepara pra atacar...e..", aux1.name);
+    acerto = dice(20);
+    if (acerto = 20)
+    {
+      printf("Você rolou 20!! Acertos criticos dão o dobro de dano.");
+      damage = (2 * damageDone(aux1.damage));
+    }
+    else if (acerto < aux2.resistence)
+    {
+      printf("Errou o golpe, você rolou %d e a resistencia do inimigo é %d", acerto, aux2.resistence);
+    }
+    else
+    {
+      printf("Você rolou %d e acertou o inimigo que tem resistencia %d", acerto, aux2.resistence);
+      damage = damageDone(aux1.damage);
+    }
+    aux2.life = aux2.life - damage;
+    if (aux2.life < 1)
+      break;
+
+    printf("%s se prepara pra atacar...e..", aux2.name);
+    acerto = dice(20);
+    if (acerto = 20)
+    {
+      printf("Você rolou 20!! Acertos criticos dão o dobro de dano.");
+      damage = (2 * damageDone(aux2.damage));
+    }
+    else if (acerto < aux1.resistence)
+    {
+      printf("Errou o golpe, você rolou %d e a resistencia do inimigo é %d", acerto, aux1.resistence);
+    }
+    else
+    {
+      printf("Você rolou %d e acertou o inimigo que tem resistencia %d", acerto, aux1.resistence);
+      damage = damageDone(aux2.damage);
+    }
+    aux1.life = aux1.life - damage;
+  }
+}
+
+void easterEgg()
+{
+  int escolha;
+  char *str1 = "Você deseja fazer alguma coisa a respeito??\n1 - Fugir da galinha??\n2 - Pedir ajuda??\n3 - Chorar pela sua mamãe??\n->";
+  char *str2 = "Sua escolha pouco importa, a galinha quer sanguee!!";
+  colledPrint(str1);
+  scanf("%d", &escolha);
+  colledPrint(str2);
+  fight(player, galinha);
+}
 
 void main()
 {
@@ -180,12 +231,15 @@ void main()
   charSelection();
   //Textao
   clrscr();
+  colledPrint("Here i gooooooooooooooooooooooooooooo");
+  char *str1 = "Obstinado a conhecer a grande cidade de Whiterun e conhecer o mestre de sua arte"
+               " você decide sair da fazenda que passou sua vida toda deixando para trás sua familia e amigos..."
+               " Após 2 dias de viagem a sua primeira parada é na vila de Riverwood."
+               " Uma vila pouco movimentada, com seu pricipal atrativo o madereira local.."
+               " Você decide ir a taverna local para buscar direções que deve seguir para chegar a Whiterun\n\n"
+               "Em frente a taverna você já consegue ouvir musica, você vê algumas galinhas e uma carroça."
+               " Uma das galinhas para bem em sua frente bloqueando sua passagem (Obiviamente de proposito.....).\n";
 
-  char *str = "Obstinado a conhecer a grande cidade de Whiterun e conhecer o mestre de sua arte"
-              " você decide sair da fazenda que passou sua vida toda deixando para trás sua familia e amigos..."
-              " Após 2 dias de viagem a sua primeira parada é na vila de Riverwood."
-              " Uma vila pouco movimentada, com seu pricipal atrativo o madereira local.."
-              " Você decide ir a taverna local para buscar direções que deve seguir para chegar a Whiterun\n";
-
-  printColled(str);
+  colledPrint(str1);
+  easterEgg();
 }
