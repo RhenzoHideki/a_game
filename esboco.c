@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <time.h>
 
-char NAME[20];
+char NAME[20] = "Teste";
 struct Tcreature
 {
   char name[20];
@@ -44,19 +44,23 @@ void randomize()
 
 int dice(int aux)
 {
-  int rolagem;
-  rolagem = (rand() % aux) + 1;
-  return rolagem;
+  return (rand() % aux) + 1;
 }
 
-int damageDone(int aux[3])
+int damageDone(struct Tcreature *damager, struct Tcreature *taker, int aux)
 {
-  int damage = 0;
-  for (int i = 0; i < aux[1]; i++)
+  int damage = (dice(damager->damage[0]) * damager->damage[1] + damager->damage[2]) * aux;
+  taker->life = taker->life - damage;
+  if (taker->life > 0)
   {
-    damage = dice(aux[0]) + damage;
+    printf("%s causou %d de dano a %s", damager->name, damage, taker->name);
+    return 0;
   }
-  return damage + aux[2];
+  else
+  {
+    printf("%s deu uma chapoletada fatal no %s", damager->name, taker->name);
+    return 1;
+  }
 };
 
 void defineClassPlayer(int aux)
@@ -174,27 +178,33 @@ void charSelection()
     }
   }
 }
-void fight(struct Tcreature aux1, struct Tcreature aux2)
+
+void verifyHit(struct Tcreature *atk, struct Tcreature *def)
+{
+  int acerto = dice(20);
+  if (acerto = 20)
+  {
+    printf("Você rolou 20!! Acertos criticos dão o dobro de dano.\n");
+    damageDone(atk, def, 2);
+  }
+  else if (acerto < def->resistence)
+  {
+    printf("%s errou o golpe, rolou %d e a resistencia do inimigo é %d\n",atk->name, acerto, def->resistence);
+  }
+  else
+  {
+    printf("Você rolou %d e acertou o inimigo que tem resistencia %d\n", acerto, def->resistence);
+    damageDone(atk, def, 1);
+  }
+}
+
+void fight(struct Tcreature *aux1, struct Tcreature aux2)
 {
   int acerto, damage;
-  while (aux1.life > 1 || aux2.life > 1)
+  while (aux1.life > 1 && aux2.life > 1)
   {
     printf("%s se prepara pra atacar...e..\n", aux1.name);
-    acerto = dice(20);
-    if (acerto = 20)
-    {
-      printf("Você rolou 20!! Acertos criticos dão o dobro de dano.\n");
-      damage = (2 * damageDone(aux1.damage));
-    }
-    else if (acerto < aux2.resistence)
-    {
-      printf("Errou o golpe, você rolou %d e a resistencia do inimigo é %d\n", acerto, aux2.resistence);
-    }
-    else
-    {
-      printf("Você rolou %d e acertou o inimigo que tem resistencia %d\n", acerto, aux2.resistence);
-      damage = damageDone(aux1.damage);
-    }
+
     aux2.life = aux2.life - damage;
     if (aux2.life < 1)
       break;
@@ -238,7 +248,7 @@ void main()
   charSelection();
   //Textao
   clrscr();
- 
+
   char *str1 = "Obstinado a conhecer a grande cidade de Whiterun e conhecer o mestre de sua arte"
                " você decide sair da fazenda que passou sua vida toda deixando para trás sua familia e amigos..."
                " Após 2 dias de viagem a sua primeira parada é na vila de Riverwood."
