@@ -6,6 +6,8 @@
 
 #define TAM_USER 10
 
+void defineClassPlayer();
+
 char NAME[20] = "Arthur";
 
 struct Usuario {
@@ -49,23 +51,24 @@ struct Tcreature wolf = {
     {4, 2, 2},
     1};
 
-int criaUsuario() {
+void criaUsuario() {
     FILE *ptr;
     int ret;
-    struct Usuario aux = {"Mike",
+    struct Usuario aux = {"Igor",
                           "mikeicd",
                           "123",
                           1,
                           1};
 
-    if ((ptr = fopen("user.dat", "a")) == NULL) {
+    if ((ptr = fopen("user.txt", "w+")) == NULL) {
         printf("Erro na abertura de arquivo\n");
         exit(-1);
     }
-    fprintf(ptr, "%s%s:%s:%d:%d\n", aux.nome, aux.username, aux.pass, aux.save, aux.classe);
+    fprintf(ptr, "%s:%s:%s:%d:%d\n", aux.nome, aux.username, aux.pass, aux.save, aux.classe);
+    fclose(ptr);
 }
 
-int verificaLogin() {
+void verificaLogin() {
     p = &aux;
     char username[10], senha[10], buffer[100 + 1];
     FILE *ptr;
@@ -76,20 +79,16 @@ int verificaLogin() {
     printf("Informe a senha: ");
     scanf(" %[^\n]s", senha);
 
-    if ((ptr = fopen("user.dat", "r")) == NULL) {
+    if ((ptr = fopen("user.txt", "r")) == NULL) {
         printf("Erro na abertura de arquivo\n");
         exit(-1);
     }
     while (ret != EOF) {
-        ret = fscanf(ptr, " %[^:]s: %[^:]s: %[^:]s:%d:%d", p->nome, p->username, p->pass, p->save, p->classe);
-        if (strcmp(aux.username, username) == 0 && strcmp(aux.pass, senha) == 0) {
+        ret = fscanf(ptr, "%[^:]s:%[^:]s:%[^:]s:%d:%d", p->nome, p->username, p->pass, &p->save, &p->classe);
+        if (strcmp(p->username, username) == 0 && strcmp(p->pass, senha) == 0) {
             printf("Login efetuado com sucesso!");
-            defineClassPlayer(aux.classe);
-            return 1;
+            defineClassPlayer(p->classe);
         }
-    }
-    if (ret == EOF) {
-        return 0;
     }
     fclose(ptr);
 }
@@ -98,24 +97,18 @@ void Login() {
     int x = 1;
     while (x) {
         int choice;
-        printf("1 - Fazer login");
-        printf("2 - Criar usuário");
-        printf("3 - Entrar como anonimo");
+        printf("1 - Fazer login\n");
+        printf("2 - Criar usuário\n");
+        printf("3 - Entrar como anonimo\n");
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                if (verificaLogin()) {
-                    x = 0;
-                } else {
-                    printf("Erro no login!!");
-                }
+                verificaLogin();
+                x = 0;
                 break;
             case 2:
-                if (criaUsuario()) {
-                    x = 0;
-                } else {
-                    printf("Erro na criação!!");
-                }
+                criaUsuario();
+                x = 0;
                 break;
             case 3:
                 x = 0;
@@ -359,7 +352,7 @@ void quest_1a() {
 }
 
 void quest_1b() {
-    char *str1 = "Na manhã você s"
+    char *str1 = "Na manhã você s";
 }
 
 void quest_1() {

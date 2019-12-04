@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "mix.h"
 #include "Tcreature.h"
 #include "fight.h"
+#include "mix.h"
 
 char NAME[20] = "Arthur";
 
@@ -33,7 +33,6 @@ struct Tcreature wolf = {
     13,
     {4, 2, 2},
     1};
-
 
 void easterEgg() {
     int escolha, x = 1;
@@ -94,8 +93,7 @@ void quest_1a() {
 }
 
 void quest_1b() {
-  char *str1="Na manhã você s";
-
+    char *str1 = "Na manhã você s";
 }
 
 void quest_1() {
@@ -125,7 +123,6 @@ void quest_1() {
         }
     }
 }
-
 
 void defineClassPlayer(int aux) {
     strcpy(player.name, NAME);
@@ -231,7 +228,7 @@ void main() {
 
     //colledPrint(str1);
     easterEgg();
-   // colledPrint("Loading ..................................................................");
+    // colledPrint("Loading ..................................................................");
     clrscr();
 
     char *str2 =
