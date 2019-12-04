@@ -10,7 +10,7 @@ int main()
  escolha_de_classe: //Aqui estará a escolha de Classe que irá variar entre Guerreiro e Mago
  printf("Escolha sua classe:\n");
  printf("Digite g para guerreiro\nDigite m para mago\n");
- scanf(" %c",&c);
+
 
  switch (c) 
  {
