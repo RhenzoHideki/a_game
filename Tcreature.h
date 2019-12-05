@@ -1,6 +1,6 @@
 #ifndef TCREATURE_H
 #define TCREATURE_H
-struct Tcreature{
+struct Tcreature{ //Estrutura das creaturas do jogo.. incluindo player.
     char name[20];
     int classe;
     int life;
