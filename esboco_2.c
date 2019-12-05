@@ -23,8 +23,8 @@ struct Tcreature galinha = {
     666,
     30,
     16,
-    {10, 1, 5},
-    4};
+    {10, 1, 20},
+    20};
 
 struct Tcreature wolf = {
     "Lobo",
@@ -93,19 +93,25 @@ void quest_1a() {
 }
 
 void quest_1b() {
-    char *str1 = "Na manhã você s";
+    char *str1 =
+        "Você paga por um quarto na taverna e na manha seguinte acorda e encontra Abdam com sua carroça te esperando para sair."
+        " Vocês saem rumo a oeste pela estrada do rei... Após algumas horas de viagem vocês fazem uma parada para pegar agua em um riacho quando são atacados por um Goblin!!\n";
+    colledPrint(str1);
+    fight(&player, goblin, 0);
 }
 
 void quest_1() {
     int x = 1, escolha;
-    char *str1 = "1 - Você aceita a proposta e pergunta se daqui uma hora está bom?\n2 - Você rejeita a proposta mas diz que pode sair pela manhã do dia seguinte se ele estiver disposto.\n->";
+    char *str1 =
+        "1 - Você aceita a proposta e pergunta se daqui uma hora está bom?\n"
+        "2 - Você rejeita a proposta mas diz que pode sair pela manhã do dia seguinte se ele estiver disposto.\n-> ";
     colledPrint(str1);
     while (x) {
         scanf("%d", &escolha);
         switch (escolha) {
             case 1:
                 colledPrint("Abdam -> Perfeito, estou com pressa então quanto antes sairmos melhor, assim que chegarmos lhe pagarei 100 moedas.\n");
-                colledPrint("Loading..........................................................................................................................................");
+                colledPrint("Loading................................................................................");
                 x = 0;
                 clrscr();
                 quest_1a();
@@ -113,7 +119,7 @@ void quest_1() {
             case 2:
                 colledPrint("Abdam -> Ok..., vou perder um pouco dinheiro com atraso , mas assim que chegarmos lhe pagarei 50 moedas.\n");
                 x = 0;
-                colledPrint("Loading..........................................................................................................................................");
+                colledPrint("Loading................................................................................");
                 clrscr();
                 quest_1b();
                 break;
@@ -122,6 +128,49 @@ void quest_1() {
                 break;
         }
     }
+}
+
+void goodEnding() {
+    char *str1 =
+        "Apesar dos problemas encontrados no caminho o grupo chega em Solitude.. Abdam olha para o aventureiro e o vê de boca aberta admirando a cidade, e dá um tapa em suas costas.\n"
+        "Continua.................\n\n\n"
+        "Desenvolvedores:\n"
+        "Rhenzo Hideki\n"
+        "Mike Domingues\n";
+    colledPrint(str1);
+}
+
+void saveContent(struct Tcreature *aux1, int *aux2) {
+    int escolha, x = 1;
+    if (isDead(aux1)) {
+        colledPrint("Você morreu...\n");
+        colledPrint("1 - Continuar do ultimo save\n");
+        colledPrint("2 - Recomeçar o jogo\n");
+        colledPrint("3 - Sair do jogo\n");
+        while (x) {
+            printf("-> ");
+            scanf("%d", &escolha);
+            switch (escolha) {
+                case 1:
+                    x = 0;
+                    break;
+                case 2:
+                    *aux2 = 0;
+                    x = 0;
+                    break;
+                case 3:
+                    *aux2 = 4;
+                    x = 0;
+                    break;
+                default:
+                    colledPrint("Opção invalida...");
+                    break;
+            }
+        }
+    } else {
+        *aux2 = *aux2 + 1;
+    }
+    defineClassPlayer(aux1->classe);
 }
 
 void defineClassPlayer(int aux) {
@@ -211,12 +260,8 @@ void charSelection() {
         }
     }
 }
-
 void main() {
-    //loginUser(); //começa com o login do usuario, deixar pra dps
-    randomize();
-    charSelection();
-    clrscr();
+    int save = 0, x = 1;
     char *str1 =
         "Obstinado a conhecer a grande cidade de Solitude e conhecer o mestre de sua arte"
         " você decide sair da fazenda que passou sua vida toda deixando para trás sua familia e amigos..."
@@ -225,11 +270,6 @@ void main() {
         " Você decide ir a taverna local para buscar direções que deve seguir para chegar a Solitude\n\n"
         "Em frente a taverna você já consegue ouvir musica, você vê algumas galinhas e uma carroça."
         " Uma das galinhas para bem em sua frente bloqueando sua passagem (Obiviamente de proposito.....).\n";
-
-    //colledPrint(str1);
-    easterEgg();
-    // colledPrint("Loading ..................................................................");
-    clrscr();
 
     char *str2 =
         "Você abre a porta da taverna e vê o bardo tocando uma musica animadora alguns clientes ao redor bebendo de cantando"
@@ -241,7 +281,46 @@ void main() {
         "Você agradece e paga o taberneiro e volta sua atenção para a musica. Após algum tempo um homem se aproxima de você e lhe pergunta:\n"
         "Abdam -> Olá aventureiro, meu nome é Abdam, e fiquei sabendo que você está a caminho de Solitude, tenho algumas"
         " mercadorias para negociar lá, estou um pouco atrasado e gostaria de sair ainda hoje e teriamos que pernoitar na estrada então seria bom viajar em maior número, oque você acha?\n";
-    //colledPrint(str2);
 
-    quest_1();
+    randomize();
+    while (x) {
+        switch (save) {
+            case 0:
+                printf("Nome: ");
+                scanf(" %[^\n]s", NAME);
+                charSelection();
+                colledPrint("Saving ..................................................................");
+                clrscr();
+                save++;
+                break;
+            case 1:
+                //colledPrint(str1);
+                easterEgg();
+                colledPrint("Saving ..................................................................");
+                clrscr();
+                saveContent(&player, &save);
+                break;
+
+            case 2:
+                //colledPrint(str2);
+                quest_1();
+                colledPrint("Saving ..................................................................");
+                clrscr();
+                saveContent(&player, &save);
+                break;
+
+            case 3:
+                goodEnding();
+                x = 0;
+                break;
+
+            case 4:
+                x = 0;
+                break;
+
+            default:
+                printf("Are you god?");
+                break;
+        }
+    }
 }
