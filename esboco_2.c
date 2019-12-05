@@ -6,11 +6,11 @@
 #include "fight.h"
 #include "mix.h"
 
-char NAME[20] = "Arthur";
+char NAME[20] = "Default";
 
-struct Tcreature player;
+struct Tcreature player; //Instancia a struct player
 
-struct Tcreature goblin = {
+struct Tcreature goblin = {  //Structre de inimigos
     "Goblin",
     0,
     20,
@@ -34,7 +34,7 @@ struct Tcreature wolf = {
     {4, 2, 2},
     1};
 
-void easterEgg() {
+void easterEgg() { // Primeira missão, optativa..
     int escolha, x = 1;
     char *str1 = "Você deseja fazer alguma coisa a respeito??\n1 - Deixar a galinha em paz\n2 - Chutar a galinha\n-> ";
     colledPrint(str1);
@@ -58,7 +58,7 @@ void easterEgg() {
     }
 }
 
-void quest_1a() {
+void quest_1a() { // Missão bifurcada, esse é o lado A
     char *str1 =
         "Após uma hora você sai da taverna e encontra Abdam com sua carroça te esperando para sair."
         " Vocês saem rumo a oeste pela estrada do rei, um pouco antes de escurecer vocês decidem parar para montar acampamento."
@@ -92,7 +92,7 @@ void quest_1a() {
     }
 }
 
-void quest_1b() {
+void quest_1b() { //Missão bifurcada, Lado B
     char *str1 =
         "Você paga por um quarto na taverna e na manha seguinte acorda e encontra Abdam com sua carroça te esperando para sair."
         " Vocês saem rumo a oeste pela estrada do rei... Após algumas horas de viagem vocês fazem uma parada para pegar agua em um riacho quando são atacados por um Goblin!!\n";
@@ -100,7 +100,7 @@ void quest_1b() {
     fight(&player, goblin, 0);
 }
 
-void quest_1() {
+void quest_1() { // 1° Missão
     int x = 1, escolha;
     char *str1 =
         "1 - Você aceita a proposta e pergunta se daqui uma hora está bom?\n"
@@ -130,7 +130,7 @@ void quest_1() {
     }
 }
 
-void goodEnding() {
+void goodEnding() { //Final do jogo
     char *str1 =
         "Apesar dos problemas encontrados no caminho o grupo chega em Solitude.. Abdam olha para o aventureiro e o vê de boca aberta admirando a cidade, e dá um tapa em suas costas.\n"
         "Continua.................\n\n\n"
@@ -140,7 +140,7 @@ void goodEnding() {
     colledPrint(str1);
 }
 
-void saveContent(struct Tcreature *aux1, int *aux2) {
+void saveContent(struct Tcreature *aux1, int *aux2) { // Estrutura que verifica e salva o conteudo do jogador
     int escolha, x = 1;
     if (isDead(aux1)) {
         colledPrint("Você morreu...\n");
@@ -173,7 +173,7 @@ void saveContent(struct Tcreature *aux1, int *aux2) {
     defineClassPlayer(aux1->classe);
 }
 
-void defineClassPlayer(int aux) {
+void defineClassPlayer(int aux) { //Define os atributos da classe selecionada...
     strcpy(player.name, NAME);
     if (aux == 1) {
         player.classe = 1;
@@ -202,7 +202,7 @@ void defineClassPlayer(int aux) {
     }
 }
 
-void charSelection() {
+void charSelection() { //Opções para seleção de classe
     int escolha = 0, continuar;
     while (1) {
         while (escolha < 1 || escolha > 3) {
@@ -260,7 +260,7 @@ void charSelection() {
         }
     }
 }
-void main() {
+void main() {  //Main...
     int save = 0, x = 1;
     char *str1 =
         "Obstinado a conhecer a grande cidade de Solitude e conhecer o mestre de sua arte"
@@ -283,7 +283,7 @@ void main() {
         " mercadorias para negociar lá, estou um pouco atrasado e gostaria de sair ainda hoje e teriamos que pernoitar na estrada então seria bom viajar em maior número, oque você acha?\n";
 
     randomize();
-    while (x) {
+    while (x) {  //While/Switch que faz a função de checkpoint do jogo..
         switch (save) {
             case 0:
                 printf("Nome: ");
