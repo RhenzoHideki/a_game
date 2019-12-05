@@ -269,7 +269,7 @@ void main() {
         " Uma vila pouco movimentada, com seu pricipal atrativo a madereira local.."
         " Você decide ir a taverna local para buscar direções que deve seguir para chegar a Solitude\n\n"
         "Em frente a taverna você já consegue ouvir musica, você vê algumas galinhas e uma carroça."
-        " Uma das galinhas para bem em sua frente bloqueando sua passagem (Obiviamente de proposito.....).\n";
+        " Uma das galinhas para bem em sua frente bloqueando sua passagem (Obviamente de proposito.....)\n";
 
     char *str2 =
         "Você abre a porta da taverna e vê o bardo tocando uma musica animadora alguns clientes ao redor bebendo de cantando"
@@ -294,7 +294,7 @@ void main() {
                 save++;
                 break;
             case 1:
-                //colledPrint(str1);
+                colledPrint(str1);
                 easterEgg();
                 colledPrint("Saving ..................................................................");
                 clrscr();
@@ -302,7 +302,7 @@ void main() {
                 break;
 
             case 2:
-                //colledPrint(str2);
+                colledPrint(str2);
                 quest_1();
                 colledPrint("Saving ..................................................................");
                 clrscr();
