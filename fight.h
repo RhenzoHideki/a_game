@@ -7,7 +7,9 @@
 #include "fight.h"
 #include "mix.h"
 
-void damageDone(struct Tcreature *damager, struct Tcreature *taker, int aux) {
+//Header das funções de combate
+
+void damageDone(struct Tcreature *damager, struct Tcreature *taker, int aux) { //Função que calcula o dano
     int damage = (dice(damager->damage[0]) * damager->damage[1] + damager->damage[2]) * aux;
     taker->life = taker->life - damage;
     if (taker->life > 0) {
@@ -17,7 +19,7 @@ void damageDone(struct Tcreature *damager, struct Tcreature *taker, int aux) {
     }
 };
 
-void verifyHit(struct Tcreature *atk, struct Tcreature *def, int bonusPlus) {
+void verifyHit(struct Tcreature *atk, struct Tcreature *def, int bonusPlus) { //Função que verifica se o atacante acertou
     int acerto = dice(20);
     int bonusMod = atk->bonus + bonusPlus;
     if (acerto == 20) {
@@ -31,7 +33,7 @@ void verifyHit(struct Tcreature *atk, struct Tcreature *def, int bonusPlus) {
     }
 }
 
-int isDead(struct Tcreature *aux) {
+int isDead(struct Tcreature *aux) {//Função que verifica se o jogador continua vivo
     if (aux->life > 0) {
         return 0;
     } else {
@@ -39,7 +41,7 @@ int isDead(struct Tcreature *aux) {
     }
 }
 
-void fight(struct Tcreature *aux1, struct Tcreature aux2, int bonusPlus) {
+void fight(struct Tcreature *aux1, struct Tcreature aux2, int bonusPlus) {//Função que inicia a batalha
     while (1) {
         verifyHit(aux1, &aux2, bonusPlus);
         if (isDead(&aux2)) {
