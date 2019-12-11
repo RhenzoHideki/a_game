@@ -4,9 +4,7 @@
 
 #ifndef A_GAME_ENEMYSTRUCT_H
 #define A_GAME_ENEMYSTRUCT_H
-
-#endif //A_GAME_ENEMYSTRUCT_H
-
+ 
 
 struct Enemy
 {
@@ -17,3 +15,5 @@ struct Enemy
         int damage;
         int dice;
 };
+
+#endif //A_GAME_ENEMYSTRUCT_H

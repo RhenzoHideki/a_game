@@ -5,6 +5,7 @@
 #include "Tcreature.h"
 #include "fight.h"
 #include "mix.h"
+#include "user.h"
 
 char NAME[20] = "Default";
 
@@ -286,8 +287,7 @@ void main() {  //Main...
     while (x) {  //While/Switch que faz a função de checkpoint do jogo..
         switch (save) {
             case 0:
-                printf("Nome: ");
-                scanf(" %[^\n]s", NAME);
+                Login();
                 charSelection();
                 colledPrint("Saving ..................................................................");
                 clrscr();
