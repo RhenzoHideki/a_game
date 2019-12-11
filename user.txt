@@ -1,2 +1,1 @@
-Rhenzo rhenzo 123 0 0
-mike mikeicd 1234 0 0
+mike:mike:1234:0:0

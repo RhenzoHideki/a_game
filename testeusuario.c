@@ -30,7 +30,7 @@ void criaUsuario() {
     printf("Erro na abertura de arquivo\n");
     exit(-1);
   }
-  fprintf(ptr, "%s %s %s %d %d\n", p->nome, p->username, p->pass, p->save, p->classe);
+  fprintf(ptr, "%s:%s:%s:%d:%d\n", p->nome, p->username, p->pass, p->save, p->classe);
   fclose(ptr);
 }
 
@@ -50,8 +50,8 @@ void verificaLogin() {
     exit(-1);
   }
   while (ret != EOF) {
-    ret = fscanf(ptr, "%s %s %s %d %d", p->nome, p->username, p->pass, &p->save, &p->classe);
-    //printf("%s %s %s %d %d\n", p->nome, p->username, p->pass, p->save, p->classe);
+    ret = fscanf(ptr, "%[^:]s:%[^:]s:%[^:]s:%d:%d", p->nome, p->username, p->pass, &p->save, &p->classe);
+    printf("%s %s %s %d %d\n", p->nome, p->username, p->pass, p->save, p->classe);
     if (strcmp(p->username, username) == 0 && strcmp(p->pass, senha) == 0) {
       printf("Login efetuado com sucesso!\n");
       break;
