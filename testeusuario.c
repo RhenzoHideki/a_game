@@ -15,17 +15,22 @@ struct Usuario {
 void criaUsuario() {
   FILE *ptr;
   int ret;
-  struct Usuario aux = {"Igor",
-                        "mikeicd",
-                        "1234",
-                        1,
-                        1};
+  p = &aux;
+  char nome[20];
+  char username[10];
+  char pass[10];
+  printf("Insira seu nome: ");
+  scanf(" %[^\n]s", p->nome);
+  printf("Insira seu nome de usuário: ");
+  scanf(" %[^\n]s", p->username);
+  printf("Escolha uma senha: ");
+  scanf(" %[^\n]", p->pass);
 
-  if ((ptr = fopen("user.txt", "w+")) == NULL) {
+  if ((ptr = fopen("user.txt", "ab")) == NULL) {
     printf("Erro na abertura de arquivo\n");
     exit(-1);
   }
-  fprintf(ptr, "%s:%s:%s:%d:%d\n", aux.nome, aux.username, aux.pass, aux.save, aux.classe);
+  fprintf(ptr, "%s %s %s %d %d\n", p->nome, p->username, p->pass, p->save, p->classe);
   fclose(ptr);
 }
 
@@ -40,14 +45,19 @@ void verificaLogin() {
   printf("Informe a senha: ");
   scanf(" %[^\n]s", senha);
 
-  if ((ptr = fopen("user.txt", "r")) == NULL) {
+  if ((ptr = fopen("user.txt", "rb")) == NULL) {
     printf("Erro na abertura de arquivo\n");
     exit(-1);
   }
   while (ret != EOF) {
-    ret = fscanf(ptr, "%[^:]s:%[^:]s:%[^:]s:%d:%d", p->nome, p->username, p->pass, &p->save, &p->classe);
+    ret = fscanf(ptr, "%s %s %s %d %d", p->nome, p->username, p->pass, &p->save, &p->classe);
+    //printf("%s %s %s %d %d\n", p->nome, p->username, p->pass, p->save, p->classe);
     if (strcmp(p->username, username) == 0 && strcmp(p->pass, senha) == 0) {
-      printf("Login efetuado com sucesso!");
+      printf("Login efetuado com sucesso!\n");
+      break;
+    } else {
+      printf("Usuário invalido");
+      break;
     }
   }
   fclose(ptr);
@@ -68,7 +78,6 @@ void Login() {
         break;
       case 2:
         criaUsuario();
-        x = 0;
         break;
       case 3:
         x = 0;
@@ -78,4 +87,8 @@ void Login() {
         break;
     }
   }
+}
+
+void main() {
+  Login();
 }

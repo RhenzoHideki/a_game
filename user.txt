@@ -1,1 +1,2 @@
-Igor:mikeicd:123:1:1
+Igor mikeicd 1234 1 1
+Camilo camil 12345 0 0
