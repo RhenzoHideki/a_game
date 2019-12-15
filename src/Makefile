@@ -1,6 +1,6 @@
 #arquivo Makefile
-aGame: main.o Tcreature.o mix.o fight.o
-	gcc main.o Tcreature.o mix.o fight.o -o aGame
+aGame: main.o Tcreature.o mix.o fight.o user.o
+	gcc main.o user.o Tcreature.o mix.o fight.o -o aGame
  
 main.o: main.c Tcreature.h mix.h fight.h
 	gcc -c main.c
@@ -13,11 +13,12 @@ mix.o: mix.c mix.h
 
 fight.o: fight.c fight.h mix.h Tcreature.h
 	gcc -c fight.c
+
+user.o: user.c user.h
+	gcc -c user.c
  
 clean:  
-	rm *.o
-	rm -r ./install
+	rm *.o	
  
 install:
-	mkdir install
-	mv aGame ./install
+	mv aGame ../
