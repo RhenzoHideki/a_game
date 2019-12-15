@@ -1,10 +1,8 @@
-//
 
 #ifndef A_GAME_USER_H
 #define A_GAME_USER_H
 
 #include <stdio.h>
-
 
 struct Usuario {
   char nome[20];
@@ -91,4 +89,4 @@ void Login() {
   }
 }
 
-#endif //A_GAME_USER_H
+#endif  //A_GAME_USER_H
