@@ -7,5 +7,4 @@ To run the game you have to be on Linux based OS and run the "aGame" file.
 ex: ./aGame 
 
 # Developers 
-Rhenzo Hideki;
-Mike Domingues.
+Rhenzo Hideki and Mike Domingues.
