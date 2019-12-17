@@ -7,8 +7,7 @@
 #include "mix.h"
 #include "user.h"
 
-char NAME[20] = "Default";
-
+struct Usuario hero, *pHero;
 struct Tcreature player, galinha, wolf, goblin;
 
 void easterEgg() {  // Primeira missão, optativa..
@@ -118,7 +117,6 @@ void goodEnding() {  //Final do jogo
 }
 
 void defineClassPlayer(int aux) {  //Define os atributos da classe selecionada...
-  strcpy(player.name, NAME);
   if (aux == 1) {
     player.classe = 1;
     player.life = 50;
@@ -239,6 +237,7 @@ void charSelection() {  //Opções para seleção de classe
 }
 void main() {  //Main...
   int save = 0, x = 1;
+  pHero = &hero;
   char *str1 =
       "Obstinado a conhecer a grande cidade de Solitude e conhecer o mestre de sua arte"
       " você decide sair da fazenda que passou sua vida toda deixando para trás sua familia e amigos..."
@@ -259,11 +258,18 @@ void main() {  //Main...
       "Abdam -> Olá aventureiro, meu nome é Abdam, e fiquei sabendo que você está a caminho de Solitude, tenho algumas"
       " mercadorias para negociar lá, estou um pouco atrasado e gostaria de sair ainda hoje e teriamos que pernoitar na estrada então seria bom viajar em maior número, oque você acha?\n";
 
+  Login();
+  strcpy(player.name, pHero->username);
+  if (pHero->save > 0) {
+    save = pHero->save;
+    player.classe = pHero->classe;
+    defineClassPlayer(player.classe);
+  }
+
   randomize();
   while (x) {  //While/Switch que faz a função de checkpoint do jogo..
     switch (save) {
       case 0:
-        Login();
         charSelection();
         colledPrint("Saving ..................................................................");
         clrscr();

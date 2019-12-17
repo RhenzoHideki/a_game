@@ -1,36 +1,35 @@
 
 #include "user.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "Tcreature.h"
 
-struct Usuario aux, *p;
+struct Usuario hero, *p;
 
 void criaUsuario() {
   FILE *ptr;
   int ret;
-  p = &aux;
-  char nome[20];
   char username[10];
   char pass[10];
-  printf("Insira seu nome: ");
-  scanf(" %[^\n]s", p->nome);
   printf("Insira seu nome de usuário: ");
-  scanf(" %[^\n]s", p->username);
+  scanf(" %[^\n]s", username);
   printf("Escolha uma senha: ");
-  scanf(" %[^\n]", p->pass);
+  scanf(" %[^\n]s", pass);
 
   if ((ptr = fopen("user.txt", "ab")) == NULL) {
     printf("Erro na abertura de arquivo\n");
     exit(-1);
   }
-  fprintf(ptr, "%s %s %s %d %d\n", p->nome, p->username, p->pass, p->save, p->classe);
+  fprintf(ptr, "%s %s %d %d\n", username, pass, 0, 0);
   fclose(ptr);
 }
 
-void verificaLogin() {
-  p = &aux;
+int verificaLogin() {
   char username[10], senha[10], buffer[100 + 1];
+  int ret = 0;
+  p = &hero;
   FILE *ptr;
-  int ret = 0, i = 0;
 
   printf("Informe o usuário: ");
   scanf(" %[^\n]s", username);
@@ -42,40 +41,49 @@ void verificaLogin() {
     exit(-1);
   }
   while (ret != EOF) {
-    ret = fscanf(ptr, "%s %s %s %d %d", p->nome, p->username, p->pass, &p->save, &p->classe);
+    ret = fscanf(ptr, "%s %s %d %d", p->username, p->pass, &p->save, &p->classe);
     //printf("%s %s %s %d %d\n", p->nome, p->username, p->pass, p->save, p->classe);
     if (strcmp(p->username, username) == 0 && strcmp(p->pass, senha) == 0) {
-      printf("Login efetuado com sucesso!\n");
-      break;
-    } else {
-      printf("Usuário invalido");
-      break;
+      fclose(ptr);
+      return 1;
     }
   }
   fclose(ptr);
+  return 0;
 }
 
 void Login() {
-  int x = 1;
+  int x = 1, logado;
+  p = &hero;
   while (x) {
     int choice;
     printf("1 - Fazer login\n");
     printf("2 - Criar usuário\n");
     printf("3 - Entrar como anonimo\n");
+    printf("-> ");
     scanf("%d", &choice);
     switch (choice) {
       case 1:
-        verificaLogin();
-        x = 0;
+        logado = verificaLogin();
+        if (logado) {
+          printf("Login efetuado com sucesso!\n");
+          x = 0;
+        } else {
+          printf("Usuário não existe!\n");
+        }
         break;
       case 2:
         criaUsuario();
         break;
       case 3:
+        strcpy(p->username, "Anon");
+        strcpy(p->pass, "XD");
+        p->classe = 0;
+        p->save = 0;
         x = 0;
         break;
       default:
-        printf("Opção não existe!");
+        printf("Opção não existe!\n");
         break;
     }
   }
